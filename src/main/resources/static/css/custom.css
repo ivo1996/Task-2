@@ -1,0 +1,31 @@
+th a{
+		color: black;	
+	}
+	
+th a:hover{
+		color: darkGrey;
+		text-decoration: none;	
+	}
+span.correct{
+		color:LimeGreen;
+		font-weight: bold;
+	}
+span.incorrect{
+		color:red;
+		font-weight: bold;
+	}
+#btnLogin{
+	display: none;
+}
+#btnLogout{
+	display: none;
+}
+.logbtn{
+	margin-top: 1.1%
+}
+.form-group{
+	height: 20px;
+}
+.row{
+	height: 40px;
+}
