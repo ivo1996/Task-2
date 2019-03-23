@@ -96,7 +96,7 @@ public class UserResource {
 //------------------------Taken User name--------------------------------------------
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@PostMapping(value = "/takenuser/{username}")
-	//////@PreAuthorize("hasAnyRole('ADMIN','EMPLOYER','EMPLOYEE')")
+	@PreAuthorize("hasAnyRole('ADMIN','EMPLOYER','EMPLOYEE')")
 	public ResponseEntity<?> usernameTaken(@PathVariable String username) {
 		Optional<User> currentUserOptional = userService.findByUsername(username);
 		if (currentUserOptional.isPresent()) {
@@ -110,7 +110,7 @@ public class UserResource {
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@PostMapping(value = "/takenemail/{email}")
-	////@PreAuthorize("hasAnyRole('ADMIN','EMPLOYER','EMPLOYEE')")
+	@PreAuthorize("hasAnyRole('ADMIN','EMPLOYER','EMPLOYEE')")
 	public ResponseEntity<?> emailTaken(@PathVariable String email) {
 		Optional<User> currentUserOptional = userService.findByEmail(email);
 		if (currentUserOptional.isPresent()) {
@@ -123,7 +123,7 @@ public class UserResource {
 //------------------------Taken department------------------------------------------
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@PostMapping(value = "/takenDepartment/{department}")
-	////@PreAuthorize("hasAnyRole('ADMIN','EMPLOYER','EMPLOYEE')")
+	@PreAuthorize("hasAnyRole('ADMIN','EMPLOYER','EMPLOYEE')")
 	public ResponseEntity<?> departmentTaken(@PathVariable String department) {
 		Optional<Department> currentDepartment = departmentService.findByName(department);
 		if (currentDepartment.isPresent()) {
@@ -136,7 +136,7 @@ public class UserResource {
 //------------------------Taken task------------------------------------------
 		@SuppressWarnings({ "rawtypes", "unchecked" })
 		@PostMapping(value = "/takenTask/{title}")
-		////@PreAuthorize("hasAnyRole('ADMIN','EMPLOYER','EMPLOYEE')")
+		@PreAuthorize("hasAnyRole('ADMIN','EMPLOYER','EMPLOYEE')")
 		public ResponseEntity<?> takenTask(@PathVariable String title) {
 			Optional<Task> task = taskService.findByName(title);
 			if (task.isPresent()) {
@@ -149,7 +149,7 @@ public class UserResource {
 //------------------------Get Data------------------------------------------------------------------------------------
 //------------------------Returns all task titles for the select forms---------------	
 	@GetMapping("/tasks")
-	////@PreAuthorize("hasAnyRole('ADMIN','EMPLOYER','EMPLOYEE')")
+	@PreAuthorize("hasAnyRole('ADMIN','EMPLOYER','EMPLOYEE')")
 	public ResponseEntity<List<String>> getTasks(){
 			List<String> titles = new ArrayList<String>();
 			List<Task> tasks = taskService.findAll();
@@ -162,7 +162,7 @@ public class UserResource {
 
 //------------------------------Get tasks for logged employee----------------
 	@GetMapping("/tasks/{id}")
-	////@PreAuthorize("hasAnyRole('ADMIN','EMPLOYER','EMPLOYEE')")
+	@PreAuthorize("hasAnyRole('ADMIN','EMPLOYER','EMPLOYEE')")
 	public ResponseEntity<Set<Task>> getEmployeeTasks(@PathVariable Long id){
 		Set<Task> tasks = employeeService.findById(id).get().getTask();
 		return new ResponseEntity<Set<Task>>(tasks, HttpStatus.OK);
@@ -170,7 +170,7 @@ public class UserResource {
 
 //-----------------------------Department titles for select forms-------------
 	@GetMapping(value="/department/name")
-	////@PreAuthorize("hasAnyRole('ADMIN','EMPLOYER','EMPLOYEE')")
+	@PreAuthorize("hasAnyRole('ADMIN','EMPLOYER','EMPLOYEE')")
 	public ResponseEntity<List<String>> getDepartmentNames(){
 		List<String> departmentNames = new ArrayList<String>();
 		List<Department> departments = departmentService.findAll();
@@ -183,7 +183,7 @@ public class UserResource {
 	
 //-----------------------------Department id for select forms-------------	
 	@GetMapping(value="/department/id")
-	////@PreAuthorize("hasAnyRole('ADMIN','EMPLOYER','EMPLOYEE')")
+	@PreAuthorize("hasAnyRole('ADMIN','EMPLOYER','EMPLOYEE')")
 	public ResponseEntity<List<Long>> getDepartmentIds(){
 		List<Long> departmentIds = new ArrayList<Long>();
 		List<Department> departments = departmentService.findAll();
@@ -196,7 +196,7 @@ public class UserResource {
 	
 //----------------------------Employer ids for select forms----------------
 	@GetMapping(value="/employer/id")
-	////@PreAuthorize("hasAnyRole('ADMIN','EMPLOYER','EMPLOYEE')")
+	@PreAuthorize("hasAnyRole('ADMIN','EMPLOYER','EMPLOYEE')")
 	public ResponseEntity<List<Long>> getEmployers(){
 		List<Long> employerIds = new ArrayList<Long>();
 		List<Employer> employers = employerService.findAll();
@@ -209,7 +209,7 @@ public class UserResource {
 
 //-----------------------------Number of assigned employees for logged employer-------------
 	@GetMapping(value="/employeeNum/{id}")
-	////@PreAuthorize("hasAnyRole('ADMIN','EMPLOYER','EMPLOYEE')")
+	@PreAuthorize("hasAnyRole('ADMIN','EMPLOYER','EMPLOYEE')")
 	public ResponseEntity<Integer> getEmployeeNum(@PathVariable Long id){
 		Optional<Employer> employer = employerService.findById(id);
 		if(employer.isPresent()) {
@@ -221,7 +221,7 @@ public class UserResource {
 //----------------------Used to fill in form fields for employee editing by self--------------
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@GetMapping(value="/employee/{id}")
-	////@PreAuthorize("hasAnyRole('ADMIN','EMPLOYER','EMPLOYEE')")
+	@PreAuthorize("hasAnyRole('ADMIN','EMPLOYER','EMPLOYEE')")
 	public ResponseEntity<Employee> getEmployee(@PathVariable Long id){
 		Optional<Employee> employee = employeeService.findById(id);
 		if(employee.isPresent()) {
@@ -232,7 +232,7 @@ public class UserResource {
 
 //----------------------Used to show the actual name of the employer in select field rather than id--------------
 	@GetMapping(value="/employer/name/{id}")
-	////@PreAuthorize("hasAnyRole('ADMIN','EMPLOYER','EMPLOYEE')")
+	@PreAuthorize("hasAnyRole('ADMIN','EMPLOYER','EMPLOYEE')")
 	public ResponseEntity<String> getEmployerName(@PathVariable Long id){
 		Optional<User> user = userService.findById(id);
 		String name = user.get().getFirstName();
@@ -242,7 +242,7 @@ public class UserResource {
 //----------------------------------Returns an employer, used for view data------------------------------
 	@SuppressWarnings("rawtypes")
 	@GetMapping(value="/employer/{page}/{id}")
-	////@PreAuthorize("hasAnyRole('ADMIN','EMPLOYER','EMPLOYEE')")
+	@PreAuthorize("hasAnyRole('ADMIN','EMPLOYER','EMPLOYEE')")
 	public ResponseEntity<?> getEmployees(@PathVariable int page,@PathVariable Long id) {
 		Pageable firstPage = PageRequest.of(page, 8);
 		Page<Employer> users = employerService.findById(page, firstPage, id);
@@ -254,7 +254,7 @@ public class UserResource {
 
 //-------------------------Shows updates for an employee---------------
 	@GetMapping(value="/updates/{page}/{id}")
-	////@PreAuthorize("hasAnyRole('ADMIN','EMPLOYER','EMPLOYEE')")
+	@PreAuthorize("hasAnyRole('ADMIN','EMPLOYER','EMPLOYEE')")
 	public ResponseEntity<?> getUpdates(@PathVariable int page,@PathVariable Long id) {
 		Pageable firstPage = PageRequest.of(page, 8);
 		Page<Update> updates = updateService.findByEmployeeId(page, firstPage, id);
@@ -263,7 +263,7 @@ public class UserResource {
 
 //--------------------------Returns the updates for an employer in a page of size 1----------------
 	@GetMapping(value="/lastUpdate/{page}/{id}")
-	////@PreAuthorize("hasAnyRole('ADMIN','EMPLOYER','EMPLOYEE')")
+	@PreAuthorize("hasAnyRole('ADMIN','EMPLOYER','EMPLOYEE')")
 	public ResponseEntity<?> getLastUpdate(@PathVariable int page,@PathVariable Long id) {
 		Pageable firstPage = PageRequest.of(page, 1, Sort.by("time").descending());
 		Page<Update> update = updateService.findByEmployerId(page, firstPage, id);
@@ -288,7 +288,7 @@ public class UserResource {
 
 //--------------------------------All users as User entity for view data as admin---------------------
 	@SuppressWarnings("rawtypes")
-	////@PreAuthorize("hasAnyRole('ADMIN')")
+	@PreAuthorize("hasAnyRole('ADMIN')")
 	@GetMapping("/{page}")
 	public ResponseEntity<?> getAll(@PathVariable int page) {
 		Pageable firstPage = PageRequest.of(page, 8);		
@@ -304,7 +304,7 @@ public class UserResource {
 //								If employee - serch through updates by message or task title-------------
 	@SuppressWarnings("rawtypes")
 	@GetMapping("/search/{key}/{page}")
-	////@PreAuthorize("hasAnyRole('ADMIN','EMPLOYER','EMPLOYEE')")
+	@PreAuthorize("hasAnyRole('ADMIN','EMPLOYER','EMPLOYEE')")
 	public ResponseEntity<?> search(@PathVariable String key, @PathVariable int page) {
 		Pageable firstPage = PageRequest.of(page, 8);
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -368,7 +368,7 @@ public class UserResource {
 //-------------------------------------Create---------------------------------------------------------------------------------------
 //----------------------------Create employee, accessed by admin or employer----------------------------	
 	@PostMapping(value="/employee", produces = "application/json", consumes = "application/json")
-	////@PreAuthorize("hasAnyRole('ADMIN','EMPLOYER')")
+	@PreAuthorize("hasAnyRole('ADMIN','EMPLOYER')")
 	public ResponseEntity<?> createEmployee(@RequestBody final Employee employee) throws ParseException {
 		User user = employee.getUser();
 		Set<Role> roles = roleService.findByName("EMPLOYEE");
@@ -386,7 +386,7 @@ public class UserResource {
 	}
 //----------------------------Create employer-------------------------------------------------------------	
 	@PostMapping(value="/employer", consumes = "application/json")
-	////@PreAuthorize("hasAnyRole('ADMIN')")
+	@PreAuthorize("hasAnyRole('ADMIN')")
 	public ResponseEntity<?> createEmployer(@RequestBody final Employer employer) throws ParseException {
 		User user = employer.getUser();
 		Set<Role> roles = roleService.findByName("EMPLOYER");
@@ -399,7 +399,7 @@ public class UserResource {
 	}
 //------------------------------Create department----------------------------------------------------------	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	////@PreAuthorize("hasAnyRole('ADMIN')")
+	@PreAuthorize("hasAnyRole('ADMIN')")
 	@PostMapping(value="/department", produces = "application/json", consumes="application/json")
 	public ResponseEntity<?> createDepartment(@RequestBody final Department department) throws ParseException{
 		Optional<Department> taken = departmentService.findByName(department.getName());
@@ -414,7 +414,7 @@ public class UserResource {
 
 //-----------------------------Create task------------------------------------------------------------------	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	////@PreAuthorize("hasAnyRole('ADMIN','EMPLOYER')")
+	@PreAuthorize("hasAnyRole('ADMIN','EMPLOYER')")
 	@PostMapping(value="/employee/task", produces="application/json", consumes = "application/json")
 	public ResponseEntity<?> createTask(@RequestBody final Task task) throws ParseException {
 		if(taskService.findByName(task.getTitle()).isPresent())
@@ -430,7 +430,7 @@ public class UserResource {
 
 //------------------------------------------------Create update----------------------------------------------
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	////@PreAuthorize("hasAnyRole('EMPLOYEE')")
+	@PreAuthorize("hasAnyRole('EMPLOYEE')")
 	@PostMapping(value="/update/{task_id}/{employee_id}", produces="application/json", consumes="application/json")
 	public ResponseEntity<?> createUpdate(@RequestBody final Update update,@PathVariable Long task_id, @PathVariable Long employee_id) throws ParseException{
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -463,7 +463,7 @@ public class UserResource {
 
 //--------------------------------------Update user entities--------------------------------------
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	////@PreAuthorize("hasAnyRole('ADMIN')")
+	@PreAuthorize("hasAnyRole('ADMIN')")
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT, consumes = "application/json")
 	public ResponseEntity<?> update(@PathVariable("id") Long id, @RequestBody UserDTO userDto) throws ParseException {
 		User user = convertToEntity(userDto);
@@ -486,7 +486,7 @@ public class UserResource {
 
 //--------------------------------------Update employees by employer--------------------------------------
 	@SuppressWarnings({ "rawtypes", "unchecked"})
-	////@PreAuthorize("hasAnyRole('EMPLOYER')")
+	@PreAuthorize("hasAnyRole('EMPLOYER')")
 	@RequestMapping(value="/employer/{id}", method=RequestMethod.PUT, consumes = "application/json")
 	public ResponseEntity<?> updateByEmployer(@PathVariable("id") Long id, @RequestBody Employee employee) throws ParseException{
 		Optional<Employee> optEmployee = employeeService.findById(id);
@@ -534,7 +534,7 @@ public class UserResource {
 
 //	--------------------------------------Update employee by self--------------------------------------
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	////@PreAuthorize("hasAnyRole('EMPLOYEE')")
+	@PreAuthorize("hasAnyRole('EMPLOYEE')")
 	@RequestMapping(value="/employee/{id}", method=RequestMethod.PUT, consumes = "application/json")
 	public ResponseEntity<?> updateByEmployee(@PathVariable("id") Long id, @RequestBody Employee employee) throws ParseException{
 		Optional<Employee> optEmployee = employeeService.findById(id);
@@ -572,7 +572,7 @@ public class UserResource {
 	//--------------------------------------Delete-------------------------------------------------
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	////@PreAuthorize("hasAnyRole('ADMIN')")
+	@PreAuthorize("hasAnyRole('ADMIN')")
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<?> delete(@PathVariable("id") Long id) {
 		
